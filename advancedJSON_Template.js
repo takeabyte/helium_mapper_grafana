@@ -7,7 +7,10 @@
         "hotspot_name": "{{name}}", 
         "rssi": {{rssi}}, 
         "snr": {{snr}}, 
-        "spreading": "{{spreading}}"
+        "spreading": "{{spreading}}",
+        "hsid": "{{id}}",
+        "hslat": "{{lat}}",
+        "hslong": "{{long}}"
       },
     {{/hotspots}}
     "hotspots_end"
