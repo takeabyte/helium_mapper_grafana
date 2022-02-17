@@ -2,7 +2,9 @@ With multipacket enabled in console.helium.com you can now list all hotspots per
 
 With the newest feature I added the HotspotID (unique) and Hotspot GPS location to be visible on the Map from each Mapper Uplink.
 This can be helpful in various scenarios. If you setup a stationary testlocation with your mapper device you can find out how many hotspots you can reach from this location. 
-For scouting possible Hotspot placement prior to install. Or you can use the bottom Map view to test out different Antennas. This scenario also relies on a fixed measurement position (mapper location) per given time frame, to keep track later for analysing this measurement data. 
+For scouting possible Hotspot placement prior to install. Or you can use the bottom Map view to test out different Antennas. This scenario also relies on a fixed measurement position (mapper location) per given time frame, to keep track later for analyzing this measurement data. 
+
+![mapviews](https://user-images.githubusercontent.com/10709642/154382877-43e1f1f2-2ee9-417c-ac14-1ece6fe10218.png)
 
 
 This is depending on: 
