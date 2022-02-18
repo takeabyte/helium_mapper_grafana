@@ -1,4 +1,53 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB_V1",
+      "label": "InfluxDB_v1",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": [],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "geomap",
+      "name": "Geomap",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.4.0-beta1"
+    },
+    {
+      "type": "panel",
+      "id": "grafana-worldmap-panel",
+      "name": "Worldmap Panel",
+      "version": "0.3.3"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -21,7 +70,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 8,
+  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -40,7 +89,7 @@
       ],
       "datasource": {
         "type": "influxdb",
-        "uid": "izviF8-7z"
+        "uid": "${DS_INFLUXDB_V1}"
       },
       "decimals": 0,
       "esGeoPoint": "geohash",
@@ -76,7 +125,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "izviF8-7z"
+            "uid": "${DS_INFLUXDB_V1}"
           },
           "groupBy": [
             {
@@ -145,7 +194,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "izviF8-7z"
+        "uid": "${DS_INFLUXDB_V1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -232,7 +281,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "izviF8-7z"
+        "uid": "${DS_INFLUXDB_V1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -303,7 +352,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "izviF8-7z"
+        "uid": "${DS_INFLUXDB_V1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -374,7 +423,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "izviF8-7z"
+        "uid": "${DS_INFLUXDB_V1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -402,7 +451,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "hotspot"
+              "options": "hotspot_name"
             },
             "properties": [
               {
@@ -419,7 +468,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 183
+                "value": 137
               }
             ]
           },
@@ -432,6 +481,50 @@
               {
                 "id": "custom.width",
                 "value": 52
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "light-red",
+                      "value": -103
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -100
+                    },
+                    {
+                      "color": "orange",
+                      "value": -97
+                    },
+                    {
+                      "color": "semi-dark-yellow",
+                      "value": -94
+                    },
+                    {
+                      "color": "super-light-green",
+                      "value": -91
+                    },
+                    {
+                      "color": "light-green",
+                      "value": -88
+                    },
+                    {
+                      "color": "semi-dark-green",
+                      "value": -85
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -84
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -443,7 +536,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 74
+                "value": 58
               },
               {
                 "id": "decimals",
@@ -459,7 +552,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 68
+                "value": 60
               },
               {
                 "id": "decimals",
@@ -499,7 +592,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 159
+                "value": 118
               }
             ]
           },
@@ -511,7 +604,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 69
+                "value": 46
               }
             ]
           },
@@ -523,7 +616,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 75
+                "value": 45
               }
             ]
           },
@@ -535,7 +628,27 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 118
+                "value": 77
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "distance_km"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 63
+              },
+              {
+                "id": "unit",
+                "value": "lengthkm"
+              },
+              {
+                "id": "decimals",
+                "value": 1
               }
             ]
           }
@@ -570,7 +683,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "izviF8-7z"
+            "uid": "${DS_INFLUXDB_V1}"
           },
           "groupBy": [],
           "measurement": "mapper_data",
@@ -599,6 +712,14 @@
               {
                 "params": [
                   "snr"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "distance_km"
                 ],
                 "type": "field"
               }
@@ -661,7 +782,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "izviF8-7z"
+        "uid": "${DS_INFLUXDB_V1}"
       },
       "fieldConfig": {
         "defaults": {
@@ -684,32 +805,36 @@
                 "value": null
               },
               {
-                "color": "#E02F44",
-                "value": -120
+                "color": "light-red",
+                "value": -103
               },
               {
-                "color": "#FF7383",
+                "color": "dark-orange",
                 "value": -100
               },
               {
-                "color": "#FFA6B0",
+                "color": "light-orange",
                 "value": -97
               },
               {
-                "color": "#C8F2C2",
+                "color": "super-light-yellow",
                 "value": -94
               },
               {
-                "color": "dark-green",
+                "color": "super-light-green",
                 "value": -91
               },
               {
-                "color": "semi-dark-blue",
-                "value": -70
+                "color": "light-green",
+                "value": -88
               },
               {
-                "color": "dark-blue",
-                "value": -50
+                "color": "green",
+                "value": -86
+              },
+              {
+                "color": "dark-green",
+                "value": -85
               }
             ]
           },
@@ -744,7 +869,7 @@
               "showLegend": true,
               "style": {
                 "color": {
-                  "fixed": "dark-green"
+                  "fixed": "#eaeaf4"
                 },
                 "opacity": 0.6,
                 "rotation": {
@@ -822,10 +947,10 @@
             "type": "markers"
           }
         ],
-        "view": {
-          "id": "europe",
+        "view": { 
+          "id": "europe",      
           "lat": 46,
-          "lon": 14,
+          "lon": 14,      
           "shared": false,
           "zoom": 4
         }
@@ -835,7 +960,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "izviF8-7z"
+            "uid": "${DS_INFLUXDB_V1}"
           },
           "groupBy": [
             {
@@ -843,6 +968,12 @@
                 "geohash"
               ],
               "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
             }
           ],
           "measurement": "mapper_data",
@@ -923,13 +1054,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Helium Mapper2",
-  "uid": "dB3TKbTGzz",
-  "version": 3,
+  "title": "Helium Mapper",
+  "uid": "dB3TKbTGy",
+  "version": 20,
   "weekStart": ""
 }
