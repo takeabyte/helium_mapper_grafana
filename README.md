@@ -1,6 +1,7 @@
 With multipacket enabled in console.helium.com you can now list all hotspots per Uplink on grafana. 
 
 With the newest feature I added the HotspotID (unique) and Hotspot GPS location to be visible on the Map from each Mapper Uplink.
+Also on the RAW table you can now see the distance in km from each mapper gps location point to the respective hotspot. (Hoping it is correctly asserted)
 This can be helpful in various scenarios. If you setup a stationary testlocation with your mapper device you can find out how many hotspots you can reach from this location. 
 For scouting possible Hotspot placement prior to install. Or you can use the bottom Map view to test out different Antennas. This scenario also relies on a fixed measurement position (mapper location) per given time frame, to keep track later for analyzing this measurement data. 
 
