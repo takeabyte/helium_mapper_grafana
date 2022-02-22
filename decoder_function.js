@@ -27,7 +27,8 @@ function Decoder(bytes, port) {
         if(sign) decoded.altitude = 0xFFFF0000 | altValue;
         else decoded.altitude = altValue;
         
-        decoded.speed = parseFloat((((bytes[8]))/1.609).toFixed(2));
+        decoded.speed = parseFloat((bytes[8]).toFixed(2));  //speed km/h
+        // speed mph    decoded.speed = parseFloat((((bytes[8]))/1.609).toFixed(2));    
         decoded.battery = parseFloat((bytes[9]/100 + 2).toFixed(2));
         decoded.sats = bytes[10];
         decoded.accuracy = 2.5; // Bogus Accuracy required by Cargo/Mapper integration
