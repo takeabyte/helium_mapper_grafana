@@ -7,7 +7,32 @@ https://www.blackvoid.club/grafana-8-influxdb-2-telegraf-2021-monitoring-stack/
 If you want to transition to Flux2 but still want to publish to the old influxdb Database, keep in Mind that as I fixed some bugs with string/integer for HSLAT and HSLONG it will throw an error string error and you have to drop that tables first. 
 
 
+For this build its important to add (update) all the other Files - decoder function, Advanced JSON and nodered reformat json first. 
+Once the Database (aka bucket) has some wrong files written in the table you have to delete the table first to proceed.
 
+After you managed to do so, add a new influxdb out Node within nodeRed. 
+Go to server and add your new influx 2 server address&port and token. 
+go back to Properties and 
+name your Bucket: nodered 
+Organization: type_your_organization 
+Measurement: mapper 
+This allows you to reuse my Grafana Template. 
+
+
+Within grafana go to configurations, 
+add a Datasource, add/modify the following (leave rest as is): 
+Name: InfluxDB_nodered
+Query Language: Flux
+HTTP 
+Url> http://yourserverip.port_to_influx2docker
+Access: Server(default)
+
+InfluxDB Details
+Organization: type_your_organization
+Token: addyourtoken
+Default Bucket: nodered
+
+Save & Test
 
 
 
