@@ -1,0 +1,76 @@
+version: "3"
+services:
+  eclipse-mosquitto:
+    command:
+      - /usr/sbin/mosquitto
+      - -c
+      - /mosquitto/config/mosquitto.conf
+    container_name: eclipse-mosquitto
+    entrypoint:
+      - /docker-entrypoint.sh
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    hostname: eclipse-mosquitto
+    image: eclipse-mosquitto:latest
+    ipc: private
+    labels:
+      description: Eclipse Mosquitto MQTT Broker
+      maintainer: Roger Light <roger@atchoo.org>
+    logging:
+      driver: db
+    ports:
+      - 0.0.0.0:1883:1883/tcp
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+      - /volume2/docker/mqtt/log:/mosquitto/log:rw
+      - /volume2/docker/mqtt/data:/mosquitto/data:rw
+      - /volume2/docker/mqtt/config:/mosquitto/config:rw
+  noder1:
+    command:
+      - -it
+    container_name: noder1
+    entrypoint:
+      - npm
+      - --no-update-notifier
+      - --no-fund
+      - start
+      - --cache
+      - /data/.npm
+      - --
+      - --userDir
+      - /data
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
+      - FLOWS=flows.json
+    hostname: noder1
+    image: nodered/node-red:latest
+    ipc: private
+    labels:
+      authors: 'Dave Conway-Jones, Nick O''Leary, James Thomas, Raymond Mouthaan'
+      org.label-schema.arch: ""
+      org.label-schema.build-date: '2022-02-18T21:01:04Z'
+      org.label-schema.description: Low-code programming for event-driven applications.
+      org.label-schema.docker.dockerfile: .docker/Dockerfile.alpine
+      org.label-schema.license: Apache-2.0
+      org.label-schema.name: Node-RED
+      org.label-schema.url: https://nodered.org
+      org.label-schema.vcs-ref: ""
+      org.label-schema.vcs-type: Git
+      org.label-schema.vcs-url: https://github.com/node-red/node-red-docker
+      org.label-schema.version: 2.2.2
+    links:
+      - /eclipse-mosquitto:/noder1/mqtt_local
+    logging:
+      driver: db
+    ports:
+      - 0.0.0.0:1880:1880/tcp
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    user: node-red
+    volumes:
+      - /volume2/docker/nodered/data:/data:rw
+    working_dir: /usr/src/node-red
