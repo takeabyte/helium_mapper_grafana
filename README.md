@@ -1,8 +1,17 @@
 ##### March Update #####
 Moving on to newest Flux Database to streamline with your other flux2 datasources. No need to have 2 dockers running when you can move on and join the future. 
 
-For a brief how to get Flux2 and Grafana Docker running, please see this for reference. Currently I don't have the time to write a proper Howto from scratch. 
+To run the required Docker containers, create new Directories on your Server (`e.g. ~/docker/influx, ~/docker/mqtt and ~/docker/nodered`), download the `nodered-mosquitto-compose.yml and influx-compose.yml` files from this repo, edit/update required infos and then place them in the corresponding folders. 
+
+Navigate to `~/docker/influx` and execute from within to download and install influx:
+`$ sudo docker-compose up -d`
+
+Do the same procedure for `~/docker/nodered` and you should be good to go. 
+
+For manual installation please see this for reference. Currently I don't have the time to write a proper Howto from scratch. 
 https://www.blackvoid.club/grafana-8-influxdb-2-telegraf-2021-monitoring-stack/ 
+
+
 
 If you want to transition to Flux2 but still want to publish to the old influxdb Database, keep in Mind that as I fixed some bugs with string/integer for HSLAT and HSLONG it will throw an error string error and you have to drop that tables first. 
 
