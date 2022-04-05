@@ -8,6 +8,8 @@ Navigate to `~/docker/influx` and execute from within to download and install in
 
 Do the same procedure for `~/docker/nodered` and you should be good to go. 
 
+If you get stuck with write permissions: `sudo chown -R 472:472 ~/docker/grafana` and `sudo chown 1000 ~/docker/nodered/data'`
+
 For manual installation please see this for reference. Currently I don't have the time to write a proper Howto from scratch. 
 https://www.blackvoid.club/grafana-8-influxdb-2-telegraf-2021-monitoring-stack/ 
 
