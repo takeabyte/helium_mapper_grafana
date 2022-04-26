@@ -2,6 +2,8 @@
 
 This Repo will guide you through the process of storing and visualizing Helium-enabled GPS-Trackers/Mappers results on a Grafana Dashboard.
 
+It is based on [friendsoflittleyus grafana helium tracker for rpi](https://friendsoflittleyus.nl/grafana-helium-gps-tracker-on-raspberry-pi/).
+
 For this to work it relies on a few different services and dependencies. \
 I compiled Nodered, Fluxdb2 and Grafana in one Docker-Compose file, but you can also install them manually. \
 Either on a NAS, VPS, or any PC, Mac, Linux System with support of Docker. \
@@ -13,7 +15,7 @@ Same goes for VPS Instances. These things are directly connected to the Internet
 **TL;DR: Helium Mapper \> Console \> MQTT Integration \> NodeRed \> Fluxdb2 \> Grafana**
 
 While its not as straight forward, I tried to make it as easy as possible. 
-Any suggestions on improvement are very welcome. 
+Any suggestions for improvement are very welcome. 
 
 # Prerequisites
 
@@ -26,30 +28,45 @@ Heltec CubeCell GPS-6502 HTCC-AB02S Board
 - [TTGO Version](https://github.com/Max-Plastix/tbeam-helium-mapper/releases/)
 - [CubeCell Vesion](https://github.com/Max-Plastix/CubeCell-GPS-Helium-Mapper/releases)
 
-### The Device must be 
+### The Device must be: 
 - onboarded on [Helium Console](https://console.helium.com/)
 - have the following [Decoder Function](https://github.com/Max-Plastix/tbeam-helium-mapper/blob/main/console-decoders/unified_decoder.js) and 
 - connected to a MQTT Integration with [Advanced JSON Body Template](https://github.com/takeabyte/helium_mapper_grafana/blob/main/advancedJSON_Template.js)
 
 ### MQTT Broker
-I use the free tier version: [Flespi](https://flespi.com/mqtt-broker) 
-but you could use any other. (used Adafruit's with some restrictions sucessfully, too)
+I use the free tier version: [Flespi](https://flespi.com/mqtt-broker), but you could use any other MQTT Broker. \
+(I've used Adafruit's free version with some restrictions in the past)
+
+### Docker Stuff 
+- install Docker: https://docs.docker.com/engine/install/
+- install docker-compose https://docs.docker.com/compose/install/ 
+(Desktop Docker Versions already come preinstalled with compose)
+- create Directories for your Docker Containers (your Directories might differ)
+   - creating folders for the active user under home directory, change permissions and ownership / UserID (otherwise it will throw an error with some cases), confirm changes with `ls -lna`:
+   ```
+   mkdir -p ~/docker/influx ~/docker/grafana ~/docker/nodered/data 
+   sudo chown -R 472:472 ~/docker/grafana && sudo chown -R 1000:1000 ~/docker/nodered/data 
+   ls -lna ~/docker/ ~/docker/nodered 
+   ```
+
+
+
+
+
+
 
 
 
 ##### March Update #####
-Moving on to newest Flux Database to streamline with your other flux2 datasources. No need to have 2 dockers running when you can move on and join the future. 
+Moving on to newest Flux Database to streamline with your other flux2 datasources. No need to have 2 influx dockers running.
 
-To run the required Docker containers, create new Directories on your Server (`e.g. ~/docker/influx, ~/docker/mqtt and ~/docker/nodered`), download the `nodered-mosquitto-compose.yml and influx-compose.yml` files from this repo, edit/update required infos and then place them in the corresponding folders. 
+To run the required Docker containers, create new Directories on your Server 
+download the `nodered-mosquitto-compose.yml and influx-compose.yml` files from this repo, edit/update required infos and then place them in the corresponding folders. 
 
 Navigate to `~/docker/influx` and execute from within to download and install influx:
 `$ sudo docker-compose up -d`
 
 Important. docker-compose expects a docker-compose.yml file in the current directory and if one isn't present it will complain. (will change my files in future update to contain a single docker-compose file for nodered, grafana and influx)
-
-Do the same procedure for `~/docker/nodered` and you should be good to go. 
-
-If you get stuck with write permissions: `sudo chown -R 472:472 ~/docker/grafana` and `sudo chown 1000 ~/docker/nodered/data`
 
 For manual installation please see this for reference. Currently I don't have the time to write a proper Howto from scratch. 
 https://www.blackvoid.club/grafana-8-influxdb-2-telegraf-2021-monitoring-stack/ 
@@ -103,8 +120,7 @@ This is depending on:
 1) Max_Plastix TTGO Repo 
    (https://github.com/Max-Plastix/tbeam-helium-mapper/releases/tag/v1.7.5)
 
-2) following partly this Guide to create NodeRed > Grafana GPS Map 
-   (https://friendsoflittleyus.nl/grafana-helium-gps-tracker-on-raspberry-pi/) 
+2) following partly this Guide to create NodeRed > Grafana GPS Map  
 
 3) Import Grafana Dashboard 
    (see https://github.com/takeabyte/helium_mapper_grafana/blob/main/grafana_dashboard.js)
