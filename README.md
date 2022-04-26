@@ -40,10 +40,10 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
 
 ### Docker Stuff 
 - install Docker: https://docs.docker.com/engine/install/
-- install docker-compose https://docs.docker.com/compose/install/ 
+- install docker-compose https://docs.docker.com/compose/install \
 (Desktop Docker Versions already come preinstalled with compose)
 - create Directories for your Docker Containers (your Directories might differ)
-   - creating folders for the active user under home directory, change permissions and ownership / UserID (otherwise it will throw an error with some cases), confirm changes with `ls -lna`:
+   - creating folders for the active user under home directory, change permissions and ownership / UserID (otherwise it will throw an error with some cases), confirm changes with ls command:
    ```
    mkdir -p ~/docker/influx ~/docker/grafana ~/docker/nodered/data 
    sudo chown -R 472:472 ~/docker/grafana && sudo chown -R 1000:1000 ~/docker/nodered/data 
