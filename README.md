@@ -2,13 +2,13 @@
 
 This Repo will guide you through the process of storing and visualizing Helium-enabled GPS-Trackers/Mappers results on a Grafana Dashboard.
 
-For this to work it relies on a few different services and dependencies.
-I compiled Nodered, Fluxdb2 and Grafana in one Docker-Compose file, but you can also install them manually. 
-Either on a NAS, VPS, or any PC, Mac, Linux System with support of Docker. 
-You could also use your locally hosted MQTT Broker, but I advice against portforwarding, if you don't know how to properly secure your Endpoints. 
+For this to work it relies on a few different services and dependencies. \
+I compiled Nodered, Fluxdb2 and Grafana in one Docker-Compose file, but you can also install them manually. \
+Either on a NAS, VPS, or any PC, Mac, Linux System with support of Docker. \
+You could also use your locally hosted MQTT Broker, but I advice against portforwarding, if you don't know how to properly secure your Endpoints. \
 Same goes for VPS Instances. These things are directly connected to the Internet. 
 
-So if you are not 100% sure how to harden and keep the system patched, please don't run it on a VPS. Find yourself an old Laptop or buy a RPI4 instead. 
+**So if you are not 100% sure how to harden and keep the system patched, please don't run it on a VPS. Find yourself an old Laptop or buy a RPI4 instead. **
 
 **TL;DR: Helium Mapper \> Console \> MQTT Integration \> NodeRed \> Fluxdb2 \> Grafana**
 
