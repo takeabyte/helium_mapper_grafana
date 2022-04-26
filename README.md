@@ -3,26 +3,33 @@
 This Repo will guide you through the process of storing and visualizing Helium-enabled GPS-Trackers/Mappers results on a Grafana Dashboard.
 
 For this to work it relies on a few different services and dependencies. 
+I compiled Nodered, Fluxdb2 and Grafana in one Docker-Compose file, but you can also install them manually. Either on a NAS, VPS, or any PC, Mac, Linux System with support of Docker. 
+You could also use your locally hosted MQTT Broker, but I advice against portforwarding, if you don't know how to properly secure your Endpoints. Same goes for VPS Instances. These things are directly connected to the Internet. So if you are not 100% sure how to harden and keep the system patched, please don't run it on a VPS. Find yourself an old Laptop or buy a RPI4 instead. 
+
+**TL;DR: Helium Mapper > Console > MQTT Integration > NodeRed > Fluxdb2 > Grafana**
 
 While its not as straight forward, I tried to make it as easy as possible. 
 Any suggestions on improvement are very welcome. 
 
 # Prerequisites
 
-### Hardware:
+## Hardware:
 TTGo / LilyGo T-Beam Lora esp32 GPS v1.1  
 Heltec CubeCell GPS-6502 HTCC-AB02S Board 
 
-### Software: 
-Devices above need to run on either of @Max-Plastix Repos: 
+## Software: 
+### Devices above need to run on either of @Max-Plastix Repos: 
 - [TTGO Version](https://github.com/Max-Plastix/tbeam-helium-mapper/releases/)
 - [CubeCell Vesion](https://github.com/Max-Plastix/CubeCell-GPS-Helium-Mapper/releases)
 
-The Device must be 
+### The Device must be 
 - onboarded on [Helium Console](https://console.helium.com/)
 - have the following [Decoder Function](https://github.com/Max-Plastix/tbeam-helium-mapper/blob/main/console-decoders/unified_decoder.js) and 
 - connected to a MQTT Integration with [Advanced JSON Body Template](https://github.com/takeabyte/helium_mapper_grafana/blob/main/advancedJSON_Template.js)
 
+### MQTT Broker
+I use the free tier version: [Flespi](https://flespi.com/mqtt-broker) 
+but you could use any other. (used Adafruit's with some restrictions sucessfully, too)
 
 
 
