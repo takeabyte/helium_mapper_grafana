@@ -1,3 +1,31 @@
+# Overview 
+
+This Repo will guide you through the process of storing and visualizing Helium-enabled GPS-Trackers/Mappers results on a Grafana Dashboard.
+
+For this to work it relies on a few different services and dependencies. 
+
+While its not as straight forward, I tried to make it as easy as possible. 
+Any suggestions on improvement are very welcome. 
+
+# Prerequisites
+
+### Hardware:
+TTGo / LilyGo T-Beam Lora esp32 GPS v1.1  
+Heltec CubeCell GPS-6502 HTCC-AB02S Board 
+
+### Software: 
+Devices above need to run on either of @Max-Plastix Repos: 
+- [TTGO Version](https://github.com/Max-Plastix/tbeam-helium-mapper/releases/)
+- [CubeCell Vesion](https://github.com/Max-Plastix/CubeCell-GPS-Helium-Mapper/releases)
+
+The Device must be 
+- onboarded on [Helium Console](https://console.helium.com/)
+- have the following [Decoder Function](https://github.com/Max-Plastix/tbeam-helium-mapper/blob/main/console-decoders/unified_decoder.js) and 
+- connected to a MQTT Integration with [Advanced JSON Body Template](https://github.com/takeabyte/helium_mapper_grafana/blob/main/advancedJSON_Template.js)
+
+
+
+
 ##### March Update #####
 Moving on to newest Flux Database to streamline with your other flux2 datasources. No need to have 2 dockers running when you can move on and join the future. 
 
@@ -77,8 +105,6 @@ This is depending on:
    Top right click Apply and after that save your dashboard again. 
    
 
-3) Max's custom decoder function 
-   (see https://github.com/takeabyte/helium_mapper_grafana/blob/main/decoder_function.js)
 
 4) Custom Advanced JSON Template under your MQTT Mapper Integration 
    (see https://github.com/takeabyte/helium_mapper_grafana/blob/main/advancedJSON_Template.js)
