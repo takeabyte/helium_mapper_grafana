@@ -2,7 +2,7 @@
 
 This Repo will guide you through the process of storing and visualizing Helium-enabled GPS-Trackers/Mappers results on a Grafana Dashboard.
 
-It is based on [friendsoflittleyus grafana helium tracker for rpi](https://friendsoflittleyus.nl/grafana-helium-gps-tracker-on-raspberry-pi/).
+It is based on [friendsoflittleyus grafana for rpi](https://friendsoflittleyus.nl/grafana-helium-gps-tracker-on-raspberry-pi/) but improved and updated to influxdb2. (JUST FOR REFERENCE. There are a few major differences, so you cant just update from their version to mine. Stuff will break otherwise.)
 
 For this to work it relies on a few different services and dependencies. \
 I compiled Nodered, Fluxdb2 and Grafana in one Docker-Compose file, but you can also install them manually. \
@@ -44,7 +44,8 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
 (Desktop Docker Versions already come preinstalled with compose)
 - create Directories for your Docker Containers (your Directories might differ)
    - creating folders for the active user under home directory, change permissions and ownership / UserID (otherwise it will throw an error with some cases), confirm changes with ls command:
-   
+
+
    ```
    mkdir -p ~/docker/influx ~/docker/grafana ~/docker/nodered/data 
    sudo chown -R 472:472 ~/docker/grafana && sudo chown -R 1000:1000 ~/docker/nodered/data 
