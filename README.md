@@ -34,7 +34,8 @@ Heltec CubeCell GPS-6502 HTCC-AB02S Board
 - connected to a MQTT Integration with [Advanced JSON Body Template](https://github.com/takeabyte/helium_mapper_grafana/blob/main/advancedJSON_Template.js)
 
 ### MQTT Broker
-I use the free tier version: [Flespi](https://flespi.com/mqtt-broker), but you could use any other MQTT Broker. \
+I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
+ but you could use any other MQTT Broker. \
 (I've used Adafruit's free version with some restrictions in the past)
 
 ### Docker Stuff 
