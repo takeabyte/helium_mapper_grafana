@@ -1,0 +1,116 @@
+version: "3"
+services:
+  grafana:
+    container_name: grafana
+    entrypoint:
+      - /run.sh
+    environment:
+      - GF_PATHS_CONFIG=/etc/grafana/grafana.ini
+      - GF_PATHS_DATA=/var/lib/grafana
+      - GF_PATHS_HOME=/usr/share/grafana
+      - GF_PATHS_LOGS=/var/log/grafana
+      - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    networks:
+      - grafananet
+    hostname: grafana
+    image: grafana/grafana:latest
+    ipc: private
+    logging:
+      driver: db
+      options: {}
+    ports:
+      - 0.0.0.0:3000:3000/tcp
+    restart: always
+    stdin_open: true
+    tty: true
+    user: 472
+    volumes:
+      - ~/docker/grafana:/var/lib/grafana:rw
+    working_dir: /usr/share/grafana
+  influxdb:
+    command:
+      - influxd
+    container_name: influxdb
+    entrypoint:
+      - /entrypoint.sh
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_BUCKET=nodered
+      - DOCKER_INFLUXDB_INIT_ORG=   /////YOUR ORG GOES HERE////
+      - DOCKER_INFLUXDB_INIT_PASSWORD= ///YOUR INFLUX LOGIN PASSWORD GOES HERE////
+      - DOCKER_INFLUXDB_INIT_USERNAME= ///YOUR INFLUX LOGIN USERNAME ////
+      - GOSU_VER=1.12
+      - INFLUXDB_VERSION=2.1.1
+      - INFLUX_CLI_VERSION=2.2.1
+      - INFLUX_CONFIGS_PATH=/etc/influxdb2/influx-configs
+      - INFLUXD_INIT_PORT=9999
+      - INFLUXD_INIT_PING_ATTEMPTS=600
+      - DOCKER_INFLUXDB_INIT_CLI_CONFIG_NAME=default
+    networks:
+      - grafananet
+    hostname: influxdb2
+    image: influxdb:latest
+    ipc: private
+    logging:
+      driver: db
+      options: {}
+    ports:
+      - 0.0.0.0:8086:8086/tcp
+    networks:
+      - grafananet
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+      - ~/docker/influxdb/data:/var/lib/influxdb2:rw
+      - ~/docker/influxdb/config:/etc/influxdb2:rw
+  nodered:
+    command:
+      - -it
+    container_name: nodered
+    entrypoint:
+      - npm
+      - --no-update-notifier
+      - --no-fund
+      - start
+      - --cache
+      - /data/.npm
+      - --
+      - --userDir
+      - /data
+    environment:
+      - NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
+      - FLOWS=flows.json
+    networks:
+      - grafananet
+    hostname: nodered
+    image: nodered/node-red:latest
+    ipc: private
+    labels:
+      authors: 'Dave Conway-Jones, Nick O''Leary, James Thomas, Raymond Mouthaan'
+      org.label-schema.arch: ""
+      org.label-schema.build-date: '2022-02-18T21:01:04Z'
+      org.label-schema.description: Low-code programming for event-driven applications.
+      org.label-schema.docker.dockerfile: .docker/Dockerfile.alpine
+      org.label-schema.license: Apache-2.0
+      org.label-schema.name: Node-RED
+      org.label-schema.url: https://nodered.org
+      org.label-schema.vcs-ref: ""
+      org.label-schema.vcs-type: Git
+      org.label-schema.vcs-url: https://github.com/node-red/node-red-docker
+      org.label-schema.version: 2.2.2
+      driver: db
+    ports:
+      - 0.0.0.0:1880:1880/tcp
+    restart: always
+    stdin_open: true
+    tty: true
+    user: node-red
+    volumes:
+      - ~/docker/nodered/data:/data:rw
+    working_dir: /usr/src/node-red
+  networks:
+      grafananet:
+        external: true
+
