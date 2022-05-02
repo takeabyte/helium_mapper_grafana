@@ -17,7 +17,7 @@ services:
       - 3000:3000/tcp
     restart: always
     tty: true
-    user: 472
+    user: "472"
     volumes:
       - ~/docker/grafana:/var/lib/grafana:rw
     working_dir: /usr/share/grafana

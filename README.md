@@ -53,6 +53,9 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
    sudo chown -R 472:472 ~/docker/grafana && sudo chown -R 1000:1000 ~/docker/nodered/data 
    ls -lna ~/docker/ ~/docker/nodered 
    ```
+ - change working directory ```cd ~/docker```
+ - copy docker compose file wget https://raw.githubusercontent.com/takeabyte/helium_mapper_grafana/main/docker-compose.yml
+ 
 
 
 
