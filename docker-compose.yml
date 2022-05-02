@@ -70,5 +70,5 @@ services:
     working_dir: /usr/src/node-red
   networks:
     grafananet:
-      external: true
+       driver: bridge
 
