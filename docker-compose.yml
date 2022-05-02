@@ -69,6 +69,6 @@ services:
       - ~/docker/nodered/data:/data:rw
     working_dir: /usr/src/node-red
   networks:
-      grafananet:
-        external: true
+    grafananet:
+      external: true
 
