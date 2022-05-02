@@ -55,7 +55,8 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
    ```
  - change working directory ```cd ~/docker```
  - copy docker compose file wget https://raw.githubusercontent.com/takeabyte/helium_mapper_grafana/main/docker-compose.yml
- 
+ - check Docker Container status ```sudo docker-compose ps```
+
 
 
 
