@@ -44,8 +44,6 @@ services:
     image: influxdb:latest
     ports:
       - 3001:3001/tcp
-    networks:
-      - grafananet
     restart: always
     tty: true
     volumes:
@@ -68,7 +66,7 @@ services:
     volumes:
       - ~/docker/nodered/data:/data:rw
     working_dir: /usr/src/node-red
-  networks:
+networks:
     grafananet:
-       driver: bridge
+        driver: bridge
 
