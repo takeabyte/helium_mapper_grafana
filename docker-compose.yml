@@ -59,7 +59,7 @@ services:
     hostname: nodered
     image: nodered/node-red:latest
     ports:
-      - 3002:3002/tcp
+      - 3002:1880/tcp
     restart: always
     tty: true
     user: node-red
