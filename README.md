@@ -49,7 +49,7 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
 
 
    ```
-   mkdir -p ~/docker/influx ~/docker/grafana ~/docker/nodered/data 
+   mkdir -p ~/docker/influx ~/docker/grafana/dashboards ~/docker/nodered/data 
    sudo chown -R 472:472 ~/docker/grafana && sudo chown -R 1000:1000 ~/docker/nodered/data 
    ls -lna ~/docker/ ~/docker/nodered 
    ```
