@@ -19,7 +19,7 @@ services:
     tty: true
     user: "472"
     volumes:
-      - ~/docker/grafana:/var/lib/grafana:rw
+      - ./grafana:/var/lib/grafana:rw
     working_dir: /usr/share/grafana
   influxdb:
     command:
@@ -47,8 +47,8 @@ services:
     restart: always
     tty: true
     volumes:
-      - ~/docker/influxdb/data:/var/lib/influxdb2:rw
-      - ~/docker/influxdb/config:/etc/influxdb2:rw
+      - ./influxdb/data:/var/lib/influxdb2:rw
+      - ./influxdb/config:/etc/influxdb2:rw
   nodered:
     container_name: nodered
     environment:
@@ -64,7 +64,7 @@ services:
     tty: true
     user: node-red
     volumes:
-      - ~/docker/nodered/data:/data:rw
+      - ./nodered/data:/data:rw
     working_dir: /usr/src/node-red
 networks:
     grafananet:
