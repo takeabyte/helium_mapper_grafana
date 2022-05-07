@@ -43,7 +43,7 @@ services:
     hostname: influxdb2
     image: influxdb:latest
     ports:
-      - 3001:3001/tcp
+      - 3001:8086/tcp
     restart: always
     tty: true
     volumes:
