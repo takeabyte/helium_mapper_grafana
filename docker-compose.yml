@@ -47,8 +47,8 @@ services:
     restart: always
     tty: true
     volumes:
-      - ./influxdb/data:/var/lib/influxdb2:rw
-      - ./influxdb/config:/etc/influxdb2:rw
+      - ./influx/data:/var/lib/influxdb2:rw
+      - ./influx/config:/etc/influxdb2:rw
   nodered:
     container_name: nodered
     environment:
