@@ -62,7 +62,7 @@ This is currently WORK IN PROGRESS, as the Docker-compose isnt fully working yet
 
 Helpful Commands: 
 `sudo docker-compose ps` to view current state of docker containers
-`sudo docker-compose logs` view log output for troubleshooting
+`sudo docker-compose logs -f` view log output for troubleshooting until quit
 `sudo docker-compose down` remove all docker containers listed in docker-compose.yml file
 
 
