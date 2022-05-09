@@ -1,0 +1,15 @@
+# grafana/provisioning/datasources/datasource.yml
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB_nodered
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    secureJsonData:
+      token: g8Sus5C4h3SisnymoBVrMh56NVf_kfvkIG5MQBC0pVKhimNBv_Gf4pDk7ujdoGKYZRREQzy3C9q7EaaN_YGykA==
+    jsonData:
+      version: Flux
+      organization: MAPPERORG
+      defaultBucket: nodered
+      tlsSkipVerify: true

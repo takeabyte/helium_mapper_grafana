@@ -1,0 +1,309 @@
+[
+    {
+        "id": "f89c6d51860d95fc",
+        "type": "tab",
+        "label": "Grafana_Influx_Flow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "acfb3245701904b7",
+        "type": "function",
+        "z": "f89c6d51860d95fc",
+        "name": "reformat json",
+        "func": "\nfunction calcCrow(lat1, lon1, lat2, lon2) \n    {\n      var R = 6371; // km\n      var dLat = toRad(lat2-lat1);\n      var dLon = toRad(lon2-lon1);\n      var lat1 = toRad(lat1);\n      var lat2 = toRad(lat2);\n      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +\n        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); \n      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); \n      var d = R * c;\n      return d;\n    }\n    // Converts numeric degrees to radians\n    function toRad(Value) \n    {\n        return Value * Math.PI / 180;\n    }\n\nfor (var i = 0; i < msg.payload.hotspots.length-1; i++) {\n    var thing = [\n        {\n            reported_at: msg.payload.reported_at,\n            dc_balance: msg.payload.dc_balance,\n            hotspot_name: msg.payload.hotspots[i].hotspot_name,\n            rssi: msg.payload.hotspots[i].rssi,\n            snr: msg.payload.hotspots[i].snr,\n            spreading: msg.payload.hotspots[i].spreading,\n            hsid: msg.payload.hotspots[i].hsid,\n            hslat: msg.payload.hotspots[i].hslat,\n            hslong: msg.payload.hotspots[i].hslong,\n            battery: msg.payload.battery,\n            lat: msg.payload.lat,\n            lon: msg.payload.lon,\n            speed: msg.payload.speed,\n            sats: msg.payload.sats,\n            distance_km: msg.payload[\"distance\"]= Number(calcCrow(msg.payload.lat,msg.payload.lon,msg.payload.hotspots[i].hslat,msg.payload.hotspots[i].hslong).toFixed(1)),\n        },\n\n        {\n          geohash:msg.payload.geohash,\n          name:msg.payload.name\n        }\n    ]\n    \n    var newMsg = {};\n    newMsg.payload = thing;\n    node.send(newMsg);\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 200,
+        "wires": [
+            [
+                "ecdce5edf3fd8507",
+                "0595d4044af3b684"
+            ]
+        ]
+    },
+    {
+        "id": "ecdce5edf3fd8507",
+        "type": "debug",
+        "z": "f89c6d51860d95fc",
+        "name": "Write to Influx",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "bd46348c89988015",
+        "type": "json",
+        "z": "f89c6d51860d95fc",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "bad802e863d775dd",
+                "3a6d20967a86bfcd"
+            ]
+        ]
+    },
+    {
+        "id": "d0f90789767f0152",
+        "type": "debug",
+        "z": "f89c6d51860d95fc",
+        "name": "GEO HASH",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b281eabdf99f6d4b",
+        "type": "json",
+        "z": "f89c6d51860d95fc",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 290,
+        "y": 220,
+        "wires": [
+            [
+                "b36c88ed336d3ea6"
+            ]
+        ]
+    },
+    {
+        "id": "8be2352582fe01c9",
+        "type": "debug",
+        "z": "f89c6d51860d95fc",
+        "name": "Dummypayload",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a2b639fe2baa45dd",
+        "type": "mqtt in",
+        "z": "f89c6d51860d95fc",
+        "name": "MQTTMapper_GPS",
+        "topic": "helium/mapper",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "0e850b51d655c855",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "bd46348c89988015",
+                "7b073dd037372780"
+            ]
+        ]
+    },
+    {
+        "id": "3a6d20967a86bfcd",
+        "type": "debug",
+        "z": "f89c6d51860d95fc",
+        "name": "MQTT JSON",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 350,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "497c28c056ca3d9a",
+        "type": "inject",
+        "z": "f89c6d51860d95fc",
+        "name": "testpayload_1",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"name\":\"MAPPERNAME\",\"dev_eui\":\"1234567890abcdef\",\"device_id\":\"123948-7823-12312-ffff-124552423123987\",\"reported_at\":\"1645123553955\",\"dc_balance\":9992000,\"data_type\":\"Mapper\",\"hotspots\":[{\"hotspot_name\":\"clever-khaki-gorilla\",\"rssi\":-90,\"snr\":-11,\"spreading\":\"SF7BW125\",\"hsid\":\"112Simmz41wLuZdjc6EAPgvz9aKJrbVhUfyauzQGiu9cTQAusDWe\",\"hslat\":55.39365142867395,\"hslong\":10.40019069537999},{\"hotspot_name\":\"rough-sandstone-caterpillar\",\"rssi\":-128,\"snr\":-3,\"spreading\":\"SF7BW125\",\"hsid\":\"11EqqnFTJwKmK1TiLU168NutHq4LJksCVbERVqZk7vo952NVYe8\",\"hslat\":55.39412720533698,\"hslong\":10.431037960846265},{\"hotspot_name\":\"polite-mossy-bee\",\"rssi\":-76,\"snr\":-1.7999999523162842,\"spreading\":\"SF7BW125\",\"hsid\":\"112QY5DZzQ26szDMzHWygpqStudmz3QaoTkJBdxdvoQYuDTnPcKr\",\"hslat\":55.489659275459076,\"hslong\":9.75453401656365},{\"hotspot_name\":\"fancy-corduroy-gibbon\",\"rssi\":-116,\"snr\":0.20000000298023224,\"spreading\":\"SF7BW125\",\"hsid\":\"11sMTEDKsymQCjzGs5wtF1X7qazVsBHxVe6hmACqFQJRfXhZujE\",\"hslat\":55.25757249875419,\"hslong\":10.610486453307571},\"hotspots_end\"],\"raw_data\":\"ysyyyadyQa=\",\"accuracy\":2.5,\"altitude\":20,\"battery\":3.98,\"lat\":55.39365142867395,\"lon\":10.467002421040807,\"sats\":12,\"speed\":40.13}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "b281eabdf99f6d4b"
+            ]
+        ]
+    },
+    {
+        "id": "7b073dd037372780",
+        "type": "debug",
+        "z": "f89c6d51860d95fc",
+        "name": "MQTT_dump",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 110,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "bad802e863d775dd",
+        "type": "geohash",
+        "z": "f89c6d51860d95fc",
+        "name": "create geohash",
+        "property": "payload",
+        "x": 460,
+        "y": 160,
+        "wires": [
+            [
+                "d0f90789767f0152",
+                "acfb3245701904b7"
+            ]
+        ]
+    },
+    {
+        "id": "b36c88ed336d3ea6",
+        "type": "geohash",
+        "z": "f89c6d51860d95fc",
+        "name": "create geohash",
+        "property": "payload",
+        "x": 460,
+        "y": 220,
+        "wires": [
+            [
+                "8be2352582fe01c9",
+                "acfb3245701904b7"
+            ]
+        ]
+    },
+    {
+        "id": "0595d4044af3b684",
+        "type": "influxdb out",
+        "z": "f89c6d51860d95fc",
+        "influxdb": "5554416b70850a91",
+        "name": "HeliumMapper_Influx2",
+        "measurement": "mapper",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "MAPPERORG",
+        "bucket": "nodered",
+        "x": 860,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "76743422b73926bf",
+        "type": "inject",
+        "z": "f89c6d51860d95fc",
+        "name": "testpayload_2",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"name\":\"MAPPERNAME\",\"dev_eui\":\"1234567890abcdef\",\"device_id\":\"123948-7823-12312-ffff-124552423123987\",\"reported_at\":\"1645123453855\",\"dc_balance\":9991200,\"data_type\":\"Mapper\",\"hotspots\":[{\"hotspot_name\":\"clever-khaki-gorilla\",\"rssi\":-110,\"snr\":-11,\"spreading\":\"SF7BW125\",\"hsid\":\"112Simmz41wLuZdjc6EAPgvz9aKJrbVhUfyauzQGiu9cTQAusDWe\",\"hslat\":55.39365142867395,\"hslong\":10.40019069537999},{\"hotspot_name\":\"rough-sandstone-caterpillar\",\"rssi\":-108,\"snr\":-3,\"spreading\":\"SF7BW125\",\"hsid\":\"11EqqnFTJwKmK1TiLU168NutHq4LJksCVbERVqZk7vo952NVYe8\",\"hslat\":55.39412720533698,\"hslong\":10.431037960846265},{\"hotspot_name\":\"polite-mossy-bee\",\"rssi\":-92,\"snr\":-1.7999999523162842,\"spreading\":\"SF7BW125\",\"hsid\":\"112QY5DZzQ26szDMzHWygpqStudmz3QaoTkJBdxdvoQYuDTnPcKr\",\"hslat\":55.489659275459076,\"hslong\":9.75453401656365},{\"hotspot_name\":\"fancy-corduroy-gibbon\",\"rssi\":-126,\"snr\":0.20000000298023224,\"spreading\":\"SF7BW125\",\"hsid\":\"11sMTEDKsymQCjzGs5wtF1X7qazVsBHxVe6hmACqFQJRfXhZujE\",\"hslat\":55.25757249875419,\"hslong\":10.610486453307571},\"hotspots_end\"],\"raw_data\":\"ysyyyadyQa=\",\"accuracy\":2.5,\"altitude\":20,\"battery\":3.98,\"lat\":55.36757552174248,\"lon\":10.467002421040807,\"sats\":12,\"speed\":40.13}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "b281eabdf99f6d4b"
+            ]
+        ]
+    },
+    {
+        "id": "0e850b51d655c855",
+        "type": "mqtt-broker",
+        "name": "flespi",
+        "broker": "mqtts://mqtt.flespi.io",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "5554416b70850a91",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "influx_docker",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "rejectUnauthorized": false
+    }
+]

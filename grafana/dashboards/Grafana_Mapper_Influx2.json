@@ -1,0 +1,1522 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 3,
+          "mappings": [],
+          "max": 4.7,
+          "min": 3.2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 3.2
+              },
+              {
+                "color": "#EAB839",
+                "value": 3.5
+              },
+              {
+                "color": "green",
+                "value": 3.7
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "limit": 2,
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "\n  from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"mapper\" and r._field == \"battery\")\n  |> drop(columns: [\"geohash\"])\n  |> aggregateWindow(every:v.windowPeriod , fn: last, createEmpty: false)\n  ",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "battery"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "alias"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Battery",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "velocitykmh"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 2,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"mapper\" and r._field == \"speed\")\n  |> drop(columns: [\"geohash\"])\n  |> aggregateWindow(every:v.windowPeriod , fn: mean, createEmpty: false)\n  ",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "speed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "speed"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Speed",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "super-light-green",
+                "value": 30
+              },
+              {
+                "color": "super-light-yellow",
+                "value": 50
+              },
+              {
+                "color": "light-orange",
+                "value": 100
+              },
+              {
+                "color": "dark-purple",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 5,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hotspot_name\")\n  |> drop(columns: [\"name\", \"_field\",\"_measurement\", \"geohash\"])\n  |> unique(column: \"_value\")\n  |> count(column: \"_value\")",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "hotspot_name"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "unique hs",
+      "transformations": [],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "description": "Chooses any random hotspot out of the last uplink packet. ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 8,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "first"
+          ],
+          "fields": "/^hotspot_name$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hotspot_name\" or r[\"_field\"] == \"reported_at\")\n  |> group(columns: [\"_measurement\", \"_field\"], mode: \"by\")\n  |> drop(columns: [\"_measurement\",\"geohash\"])\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false, column: \"reported_at\")\n  |> sort(columns: [\"reported_at\"], desc: true)\n  |> drop(columns: [\"_time\", \"_start\", \"_stop\"])\n  |> yield(name: \"last_hotspot\")",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "hotspot_name"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Last Hotspot",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsSystem"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 13,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "firstNotNull"
+          ],
+          "fields": "/^_value$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"mapper\" and r._field == \"reported_at\")\n  |> drop(columns: [\"geohash\", \"name\", \"_measurement\"])\n  |> sort(columns: [\"_value\"], desc: true)\n  |> distinct(column: \"_value\")\n  |> drop(columns:[\"_start\",\"_stop\",\"_field\"])\n  |> yield(name: \"last_seen\")\n  ",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "reported_at"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Last Reported at",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EF843C",
+                "value": 1000
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 10000
+              },
+              {
+                "color": "#EAB839",
+                "value": 50000
+              },
+              {
+                "color": "green",
+                "value": 100000
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 17,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^dc_balance$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"mapper\" and r._field == \"dc_balance\")\n  |> drop(columns: [\"geohash\", \"name\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"credits\")\n ",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "hotspot_name"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "DataCredits left",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "circleMaxSize": "11",
+      "circleMinSize": "7",
+      "colors": [
+        "#C4162A",
+        "#E02F44",
+        "#FF7383",
+        "#FFA6B0",
+        "#C8F2C2",
+        "#96D98D",
+        "#56A64B",
+        "#37872D"
+      ],
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "decimals": 0,
+      "description": "Shows current path of Mapper location with strongest hotspot signal ",
+      "esGeoPoint": "geohash",
+      "esLocationName": "hotspot_name",
+      "esMetric": "rssi",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 2
+      },
+      "hideEmpty": false,
+      "hideZero": false,
+      "id": 4,
+      "initialZoom": "12",
+      "locationData": "geohash",
+      "mapCenter": "Last GeoHash",
+      "mapCenterLatitude": 54.95809579976962,
+      "mapCenterLongitude": 10.79605731077589,
+      "maxDataPoints": 1000,
+      "mouseWheelZoom": true,
+      "pluginVersion": "7.3.1",
+      "showLegend": true,
+      "stickyLabels": false,
+      "tableQueryOptions": {
+        "geohashField": "geohash",
+        "latitudeField": "latitude",
+        "longitudeField": "longitude",
+        "metricField": "metric",
+        "queryType": "geohash"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "geohash"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hotspot_name\" or r[\"_field\"] == \"hslat\" or r[\"_field\"] == \"hslong\" or r[\"_field\"] == \"rssi\" or r[\"_field\"] == \"lat\" or r[\"_field\"] == \"lon\")\n  |> group(columns:[\"_measurement\", \"_field\"], mode:\"by\")\n  |> drop(columns: [\"_measurement\",\"_start\",\"_stop\"])\n  |> pivot(rowKey: [\"_time\",\"geohash\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> highestMax(\n    n:1000,\n    column: \"rssi\",\n    groupColumns: [\"geohash\"],\n)\n|> sort(columns:[\"_time\"], desc: true)\n\n  |> yield(name: \"location_bestsignal\")",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "hotspot_name"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "rssi"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "snr"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "spreading"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "name",
+              "operator": "=",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "thresholds": "-103,-100,-97,-94,-91,-88,-85",
+      "title": "GPS Tracker",
+      "type": "grafana-worldmap-panel",
+      "unitPlural": "dB",
+      "unitSingle": "",
+      "unitSingular": "dB",
+      "valueName": "total"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "center",
+            "displayMode": "color-text",
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hotspot_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 181
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 137
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rssi"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 52
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "light-red",
+                      "value": -103
+                    },
+                    {
+                      "color": "dark-orange",
+                      "value": -100
+                    },
+                    {
+                      "color": "orange",
+                      "value": -97
+                    },
+                    {
+                      "color": "semi-dark-yellow",
+                      "value": -94
+                    },
+                    {
+                      "color": "super-light-green",
+                      "value": -91
+                    },
+                    {
+                      "color": "light-green",
+                      "value": -88
+                    },
+                    {
+                      "color": "semi-dark-green",
+                      "value": -85
+                    },
+                    {
+                      "color": "dark-green",
+                      "value": -84
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lat"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 91
+              },
+              {
+                "id": "decimals",
+                "value": 6
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lon"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 93
+              },
+              {
+                "id": "decimals",
+                "value": 6
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "snr"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 52
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hotspot_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 123
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "reported_at"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 147
+              },
+              {
+                "id": "unit",
+                "value": "dateTimeAsSystem"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hslat"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 65
+              },
+              {
+                "id": "decimals",
+                "value": 6
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hslong"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              },
+              {
+                "id": "decimals",
+                "value": 6
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hsid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 107
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "distance_km"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 63
+              },
+              {
+                "id": "unit",
+                "value": "lengthkm"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 223
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "battery"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 69
+              },
+              {
+                "id": "unit",
+                "value": "volt"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sats"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 71
+              },
+              {
+                "id": "unit",
+                "value": "velocitykmh"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "spreading"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 2
+      },
+      "id": 8,
+      "options": {
+        "footer": {
+          "fields": [
+            "rssi",
+            "distance_km",
+            "snr",
+            "sats",
+            "speed"
+          ],
+          "reducer": [
+            "max"
+          ],
+          "show": true
+        },
+        "frameIndex": 490,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "geohash"
+          }
+        ]
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "hide": false,
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> group(columns:[\"_measurement\", \"_field\"], mode:\"by\")\n  |> drop(columns: [\"_measurement\",\"_start\",\"_stop\"])\n  |> pivot(rowKey: [\"_time\",\"geohash\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> sort(columns: [\"reported_at\"], desc: true)\n  |> yield(name: \"_rawdata\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Raw data",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "_time": true
+            },
+            "indexByName": {
+              "_time": 1,
+              "battery": 5,
+              "dc_balance": 16,
+              "distance_km": 6,
+              "geohash": 15,
+              "hotspot_name": 2,
+              "hsid": 8,
+              "hslat": 9,
+              "hslong": 10,
+              "lat": 11,
+              "lon": 12,
+              "reported_at": 0,
+              "rssi": 3,
+              "sats": 7,
+              "snr": 4,
+              "speed": 13,
+              "spreading": 14
+            },
+            "renameByName": {
+              "reported_at": ""
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "reported_at"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "description": "Marks Mapper Position with X and Hotspot Location with a circle. Its color represents the RSSI strength.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#C4162A",
+                "value": null
+              },
+              {
+                "color": "light-red",
+                "value": -103
+              },
+              {
+                "color": "dark-orange",
+                "value": -100
+              },
+              {
+                "color": "light-orange",
+                "value": -97
+              },
+              {
+                "color": "super-light-yellow",
+                "value": -94
+              },
+              {
+                "color": "super-light-green",
+                "value": -91
+              },
+              {
+                "color": "light-green",
+                "value": -88
+              },
+              {
+                "color": "green",
+                "value": -86
+              },
+              {
+                "color": "dark-green",
+                "value": -85
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rssi"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dBm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "snr"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dB"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 10,
+      "maxDataPoints": 1000,
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Basemap",
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": true,
+              "style": {
+                "color": {
+                  "fixed": "#eaeaf4"
+                },
+                "opacity": 0.6,
+                "rotation": {
+                  "fixed": 1,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "clamped"
+                },
+                "size": {
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/x-mark.svg",
+                  "mode": "fixed"
+                },
+                "text": {
+                  "field": "rssi",
+                  "mode": "fixed"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "location": {
+              "": {
+                "geohash": "geohash"
+              },
+              "latitude": "lat",
+              "longitude": "lon",
+              "mode": "geohash"
+            },
+            "name": "Mapperlocation",
+            "tooltip": true,
+            "type": "markers"
+          },
+          {
+            "config": {
+              "showLegend": false,
+              "style": {
+                "color": {
+                  "field": "rssi",
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.4,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "text": {
+                  "field": "",
+                  "mode": "fixed"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "location": {
+              "": {
+                "geohash": "geohash"
+              },
+              "latitude": "hslat",
+              "longitude": "hslong",
+              "lookup": "geohash",
+              "mode": "coords"
+            },
+            "name": "Hotspot",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "view": {
+          "id": "coords",
+          "lat": 54.95772618406357,
+          "lon": 10.796701040914815,
+          "shared": false,
+          "zoom": 5
+        }
+      },
+      "pluginVersion": "8.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "geohash"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hotspot_name\" or r[\"_field\"] == \"hslat\" or r[\"_field\"] == \"hslong\" or r[\"_field\"] == \"rssi\" or r[\"_field\"] == \"snr\" or r[\"_field\"] == \"spreading\" or r[\"_field\"] == \"sats\" or r[\"_field\"] == \"lat\" or r[\"_field\"] == \"lon\" or r[\"_field\"] == \"distance_km\" )\n  |> group(columns:[\"_measurement\", \"_field\"], mode:\"by\")\n  |> drop(columns: [\"_measurement\",\"_start\",\"_stop\"])\n  |> pivot(rowKey: [\"_time\",\"geohash\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n    |> map(fn:(r) => ({ r with hslat: float(v: r.hslat) }))\n    |> map(fn:(r) => ({ r with hslong: float(v: r.hslong) }))\n    |> sort(columns: [\"_time\"], desc: true)\n    |> yield(name: \"geohash\")",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "hotspot_name"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "rssi"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "snr"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "spreading"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "hslat"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "hslong"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "name",
+              "operator": "=",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "title": "Hotspot Coverage",
+      "type": "geomap"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P0FC46DDA4F31CEA1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "super-light-green",
+                "value": 30
+              },
+              {
+                "color": "super-light-yellow",
+                "value": 50
+              },
+              {
+                "color": "light-orange",
+                "value": 100
+              },
+              {
+                "color": "dark-purple",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "id": 13,
+      "options": {
+        "displayMode": "lcd",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "pluginVersion": "8.4.0-beta1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P0FC46DDA4F31CEA1"
+          },
+          "groupBy": [],
+          "measurement": "mapper_data",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hotspot_name\")\n  |> drop(columns: [\"name\", \"_field\",\"_measurement\"])\n  |> count()\n  |> yield(name: \"count\")",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "hotspot_name"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Hotspots per Uplink",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": ".*geohash=\"(.*?)\"}",
+            "renamePattern": "Geohash ( $1       )"
+          }
+        }
+      ],
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Helium Mapper Influx2",
+  "uid": "1mUp_ky7z",
+  "version": 1,
+  "weekStart": ""
+}

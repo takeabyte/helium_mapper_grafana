@@ -20,6 +20,8 @@ services:
     user: "472"
     volumes:
       - ./grafana:/var/lib/grafana:rw
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards/
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources/
     working_dir: /usr/share/grafana
   influxdb:
     command:
@@ -28,9 +30,10 @@ services:
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_BUCKET=nodered
-      - DOCKER_INFLUXDB_INIT_ORG=MYORG
+      - DOCKER_INFLUXDB_INIT_ORG=MAPPERORG
       - DOCKER_INFLUXDB_INIT_USERNAME=MYUSERNAME
       - DOCKER_INFLUXDB_INIT_PASSWORD=MYPASSWORD
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=g8Sus5C4h3SisnymoBVrMh56NVf_kfvkIG5MQBC0pVKhimNBv_Gf4pDk7ujdoGKYZRREQzy3C9q7EaaN_YGykA==
       - GOSU_VER=1.12
       - INFLUX_CONFIGS_PATH=/etc/influxdb2/influx-configs
     networks:
@@ -64,4 +67,3 @@ services:
 networks:
     grafananet:
         driver: bridge
-

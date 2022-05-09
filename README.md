@@ -49,7 +49,10 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
 
 
    ```
-   mkdir -p ~/docker/influx ~/docker/grafana ~/docker/nodered/data 
+   mkdir -p ~/docker/influx ~/docker/grafana/datasources ~/docker/grafana/dashboards ~/docker/nodered/data 
+   ```
+   Copy from this repo the folders grafana/ and nodered/ and put the content into your just created local folders. 
+   ```
    sudo chown -R 472:472 ~/docker/grafana && sudo chown -R 1000:1000 ~/docker/nodered/data 
    ls -lna ~/docker/ ~/docker/nodered 
    ```
@@ -57,16 +60,17 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
  - copy docker compose file wget https://raw.githubusercontent.com/takeabyte/helium_mapper_grafana/main/docker-compose.yml
  - check Docker Container status ```sudo docker-compose ps```
 
-This is currently WORK IN PROGRESS, as the Docker-compose isnt fully working yet. 
-
+This is currently WORK IN PROGRESS, as I tweak a few more details
 
 Helpful Commands: 
 `sudo docker-compose ps` to view current state of docker containers
 `sudo docker-compose logs` view log output for troubleshooting
-`sudo docker-compose down` remove all docker containers listed in docker-compose.yml file
+`sudo docker-compose down` switch off all docker containers listed in docker-compose.yml file
 
+After sucessful deployment of dockers you should be able to log into your applications via http://yourdockerhostip:3000 for grafana, :3001 for influx and :3002 for nodered. 
 
-
+Grafana Default Creds: admin/admin - set new password after first login
+INFLUXDB ADMIN Token - Change after setup. Dont forget to also update or make a new API Token for the noderedbucket (Read & write). This needs to be changed also within grafana data source and nodered influx server settings. 
 
 
 ##### March Update #####
