@@ -90,7 +90,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -177,7 +177,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -277,7 +277,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -367,7 +367,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -445,7 +445,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -537,7 +537,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -633,7 +633,7 @@
           "measurement": "mapper_data",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hotspot_name\" or r[\"_field\"] == \"hslat\" or r[\"_field\"] == \"hslong\" or r[\"_field\"] == \"rssi\" or r[\"_field\"] == \"lat\" or r[\"_field\"] == \"lon\")\n  |> group(columns:[\"_measurement\", \"_field\"], mode:\"by\")\n  |> drop(columns: [\"_measurement\",\"_start\",\"_stop\"])\n  |> pivot(rowKey: [\"_time\",\"geohash\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> highestMax(\n    n:1000,\n    column: \"rssi\",\n    groupColumns: [\"geohash\"],\n)\n|> sort(columns:[\"_time\"], desc: true)\n\n  |> yield(name: \"location_bestsignal\")",
+          "query": "from(bucket: \"nodered\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mapper\")\n  |> filter(fn: (r) => r[\"_field\"] == \"hotspot_name\" or r[\"_field\"] == \"hslat\" or r[\"_field\"] == \"hslong\" or r[\"_field\"] == \"rssi\" or r[\"_field\"] == \"lat\" or r[\"_field\"] == \"lon\")\n  |> group(columns:[\"_measurement\", \"_field\"], mode:\"by\")\n  |> drop(columns: [\"_measurement\",\"_start\",\"_stop\"])\n  |> pivot(rowKey: [\"_time\",\"geohash\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> highestMax(\n    n:1000,\n    column: \"rssi\",\n    groupColumns: [\"geohash\"],\n)\n|> sort(columns:[\"_time\"], desc: false)\n\n  |> yield(name: \"location_bestsignal\")",
           "refId": "A",
           "resultFormat": "table",
           "select": [
@@ -1032,7 +1032,7 @@
           }
         ]
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -1119,11 +1119,11 @@
               },
               {
                 "color": "light-red",
-                "value": -103
+                "value": -120
               },
               {
                 "color": "dark-orange",
-                "value": -100
+                "value": -110
               },
               {
                 "color": "light-orange",
@@ -1198,13 +1198,14 @@
           "mouseWheelZoom": true,
           "showAttribution": true,
           "showDebug": false,
-          "showScale": false,
+          "showMeasure": false,
+          "showScale": true,
           "showZoom": true
         },
         "layers": [
           {
             "config": {
-              "showLegend": true,
+              "showLegend": false,
               "style": {
                 "color": {
                   "fixed": "#eaeaf4"
@@ -1301,15 +1302,21 @@
             "type": "markers"
           }
         ],
+        "tooltip": {
+          "mode": "details"
+        },
         "view": {
-          "id": "coords",
-          "lat": 54.95772618406357,
-          "lon": 10.796701040914815,
+          "allLayers": true,
+          "id": "fit",
+          "lastOnly": false,
+          "lat": 0,
+          "layer": "Mapperlocation",
+          "lon": 0,
           "shared": false,
-          "zoom": 5
+          "zoom": 15
         }
       },
-      "pluginVersion": "8.5.1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -1443,6 +1450,8 @@
       "id": 13,
       "options": {
         "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -1454,7 +1463,7 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "8.4.0-beta1",
+      "pluginVersion": "9.2.2",
       "targets": [
         {
           "datasource": {
@@ -1503,7 +1512,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 36,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1513,10 +1522,12 @@
     "from": "now-15m",
     "to": "now"
   },
-  "timepicker": {},
+  "timepicker": {
+    "hidden": false
+  },
   "timezone": "",
   "title": "Helium Mapper Influx2",
   "uid": "1mUp_ky7z",
-  "version": 1,
+  "version": 59,
   "weekStart": ""
 }

@@ -40,6 +40,18 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
  but you could use any other MQTT Broker. \
 (I've used Adafruit's free version with some restrictions in the past)
 
+
+### First steps
+- create a docker folder on your system (preferably under your user account) 
+```
+mkdir -p ~/docker/
+cd ~/docker/
+```
+- clone this repo:
+```
+git clone https://github.com/takeabyte/helium_mapper_grafana.git
+```
+
 ### Docker Stuff 
 - install Docker: https://docs.docker.com/engine/install/
 - install docker-compose https://docs.docker.com/compose/install \
@@ -47,11 +59,8 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
 - create Directories for your Docker Containers (your Directories might differ)
    - creating folders for the active user under home directory, change permissions and ownership / UserID (otherwise it will throw an error with some cases), confirm changes with ls command:
 
-
    ```
    mkdir -p ~/docker/influx ~/docker/grafana/datasources ~/docker/grafana/dashboards ~/docker/nodered/data 
-   ```
-   Copy from this repo the folders grafana/ and nodered/ and put the content into your just created local folders. 
    ```
    sudo chown -R 472:472 ~/docker/grafana && sudo chown -R 1000:1000 ~/docker/nodered/data 
    ls -lna ~/docker/ ~/docker/nodered 
