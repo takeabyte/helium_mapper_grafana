@@ -40,7 +40,6 @@ I use the free tier cloud Broker: [Flespi](https://flespi.com/mqtt-broker), \
  but you could use any other MQTT Broker. \
 (I've used Adafruit's free version with some restrictions in the past)
 
-
 ### First steps
 - create a docker folder on your system (preferably under your user account) 
 ```
